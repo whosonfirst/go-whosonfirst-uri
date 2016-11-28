@@ -2,6 +2,7 @@ package uri
 
 import (
 	"errors"
+	_ "github.com/whosonfirst/go-whosonfirst-sources"
 	_ "log"
 	"path/filepath"
 	"strconv"
