@@ -31,9 +31,11 @@ import (
 	"github.com/whosonfirst/go-whosonfirst-uri"
 )
 
+source := "mapzen"
+function := "display"
 extras := []string{ "1024" }
 
-args := uri.NewAlternateURIArgs("mapzen", "display", extras...)
+args := uri.NewAlternateURIArgs(source, function, extras...)
 
 fname, _ := uri.Id2Fname(101736545, args)
 rel_path, _ := uri.Id2RelPath(101736545, args)
