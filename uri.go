@@ -28,6 +28,19 @@ func NewDefaultURIArgs() *URIArgs {
 	return &u
 }
 
+func NewAlternateURIArgs(source string, function string, extras ...string) *URIArgs {
+
+	u := URIArgs{
+		Alternate: true,
+		Source:    source,
+		Function:  function,
+		Extras:    extras,
+		Strict:    false,
+	}
+
+	return &u
+}
+
 type URI struct {
 	Root string
 	Args *URIArgs
@@ -45,9 +58,9 @@ func NewDefaultURI(root string) *URI {
 	return &u
 }
 
-# See also: https://github.com/whosonfirst/whosonfirst-cookbook/blob/master/how_to/creating_alt_geometries.md
+// See also: https://github.com/whosonfirst/whosonfirst-cookbook/blob/master/how_to/creating_alt_geometries.md
 
-func Id2Fname(id int, args ...*URIArgs) string {
+func Id2Fname(id int, args ...*URIArgs) (string, error) {
 
 	str_id := strconv.Itoa(id)
 	parts := []string{str_id}
@@ -62,10 +75,10 @@ func Id2Fname(id int, args ...*URIArgs) string {
 	str_parts := strings.Join(parts, "-")
 
 	fname := str_parts + ".geojson"
-	return fname
+	return fname, nil
 }
 
-func Id2Path(id int) string {
+func Id2Path(id int) (string, error) {
 
 	parts := []string{}
 	input := strconv.Itoa(id)
@@ -82,22 +95,35 @@ func Id2Path(id int) string {
 	}
 
 	path := filepath.Join(parts...)
-	return path
+	return path, nil
 }
 
-func Id2RelPath(id int, args ...*URIArgs) string {
+func Id2RelPath(id int, args ...*URIArgs) (string, error) {
 
-	fname := Id2Fname(id, args...)
-	root := Id2Path(id)
+	fname, err := Id2Fname(id, args...)
+
+	if err != nil {
+		return "", err
+	}
+
+	root, err := Id2Path(id)
+
+	if err != nil {
+		return "", err
+	}
 
 	rel_path := filepath.Join(root, fname)
-	return rel_path
+	return rel_path, nil
 }
 
-func Id2AbsPath(root string, id int, args ...*URIArgs) string {
+func Id2AbsPath(root string, id int, args ...*URIArgs) (string, error) {
 
-	rel := Id2RelPath(id, args...)
+	rel, err := Id2RelPath(id, args...)
+
+	if err != nil {
+		return "", err
+	}
 
 	abs_path := filepath.Join(root, rel)
-	return abs_path
+	return abs_path, nil
 }

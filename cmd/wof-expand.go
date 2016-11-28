@@ -25,7 +25,7 @@ func main() {
 
 		args := uri.NewDefaultURIArgs()
 
-		wof_path := uri.Id2RelPath(id, args)
+		wof_path, _ := uri.Id2RelPath(id, args)
 
 		if *prefix != "" {
 			wof_path = path.Join(*prefix, wof_path)
