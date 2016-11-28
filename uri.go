@@ -1,7 +1,8 @@
 package uri
 
 import (
-	"log"
+	"errors"
+	_ "log"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -41,23 +42,6 @@ func NewAlternateURIArgs(source string, function string, extras ...string) *URIA
 	return &u
 }
 
-type URI struct {
-	Root string
-	Args *URIArgs
-}
-
-func NewDefaultURI(root string) *URI {
-
-	args := NewDefaultURIArgs()
-
-	u := URI{
-		Args: args,
-		Root: root,
-	}
-
-	return &u
-}
-
 // See also: https://github.com/whosonfirst/whosonfirst-cookbook/blob/master/how_to/creating_alt_geometries.md
 
 func Id2Fname(id int, args ...*URIArgs) (string, error) {
@@ -69,7 +53,31 @@ func Id2Fname(id int, args ...*URIArgs) (string, error) {
 
 		uri_args := args[0]
 
-		log.Println(uri_args.Alternate)
+		if uri_args.Alternate {
+
+			if uri_args.Source == "" && uri_args.Strict {
+				return "", errors.New("Missing source argument for alternate geometry")
+			}
+
+			if uri_args.Source == "" {
+				uri_args.Source = "unknown"
+
+			}
+
+			// test is valid source here
+
+			parts = append(parts, "alt")
+			parts = append(parts, uri_args.Source)
+
+			if uri_args.Function != "" {
+				parts = append(parts, uri_args.Function)
+			}
+
+			for _, e := range uri_args.Extras {
+				parts = append(parts, e)
+			}
+		}
+
 	}
 
 	str_parts := strings.Join(parts, "-")

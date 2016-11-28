@@ -23,7 +23,7 @@ func main() {
 			log.Fatal("Unable to parse %s, because %v", str_id, err)
 		}
 
-		args := uri.NewDefaultURIArgs()
+		args := uri.NewAlternateURIArgs("foo", "bar")
 
 		wof_path, _ := uri.Id2RelPath(id, args)
 
