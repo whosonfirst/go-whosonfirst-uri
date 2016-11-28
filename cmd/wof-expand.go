@@ -7,6 +7,7 @@ import (
 	"log"
 	"path"
 	"strconv"
+	"strings"
 )
 
 func main() {
@@ -14,10 +15,11 @@ func main() {
 	var root = flag.String("root", "", "A root directory for absolute paths")
 	var prefix = flag.String("prefix", "", "Prepend this prefix to all paths")
 
-	var alt = flag.Bool("alternate", false, "...")
-	var source = flag.String("source", "", "...")
-	var function = flag.String("function", "", "...")
-	var strict = flag.Bool("strict", false, "...")
+	var alt = flag.Bool("alternate", false, "Encode URI as an alternate geometry")
+	var strict = flag.Bool("strict", false, "Ensure that the source for an alternate geometry is valid (see also: go-whosonfirst-sources)")
+	var source = flag.String("source", "", "The source of the alternate geometry")
+	var function = flag.String("function", "", "The function of the alternate geometry (optional)")
+	var extras = flag.String("extras", "", "A comma-separated list of extra information to include with an alternate geometry (optional)")
 
 	flag.Parse()
 
@@ -33,10 +35,19 @@ func main() {
 
 		if *alt {
 
-			args = uri.NewAlternateURIArgs(*source, *function)
-			args.Strict = *strict
+			parsed := make([]string, 0)
 
-			// to do: extras
+			for _, e := range strings.Split(*extras, ",") {
+
+				e = strings.Trim(e, " ")
+
+				if e != "" {
+					parsed = append(parsed, e)
+				}
+			}
+
+			args = uri.NewAlternateURIArgs(*source, *function, parsed...)
+			args.Strict = *strict
 
 		} else {
 			args = uri.NewDefaultURIArgs()
