@@ -2,7 +2,7 @@ package uri
 
 import (
 	"errors"
-	_ "github.com/whosonfirst/go-whosonfirst-sources"
+	"github.com/whosonfirst/go-whosonfirst-sources"
 	_ "log"
 	"path/filepath"
 	"strconv"
@@ -65,7 +65,9 @@ func Id2Fname(id int, args ...*URIArgs) (string, error) {
 
 			}
 
-			// test is valid source here
+			if uri_args.Strict && !sources.IsValidSource(uri_args.Source) {
+				return "", errors.New("Invalid or unknown source argument for alternate geometry")
+			}
 
 			parts = append(parts, "alt")
 			parts = append(parts, uri_args.Source)

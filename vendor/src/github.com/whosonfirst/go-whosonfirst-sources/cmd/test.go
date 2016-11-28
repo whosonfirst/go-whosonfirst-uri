@@ -7,6 +7,8 @@ import (
 
 func main() {
 
-	s, _ := sources.Spec()
-	fmt.Printf("%v\n", s)
+	fmt.Println(sources.IsValidSource("sfac"))
+
+	src, _ := sources.GetSourceByName("mapzen")
+	fmt.Println(src.License)
 }
