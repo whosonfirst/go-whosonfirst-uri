@@ -4,7 +4,9 @@ import (
 	"errors"
 	"github.com/whosonfirst/go-whosonfirst-sources"
 	_ "log"
+	"net/url"
 	"path/filepath"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -135,6 +137,45 @@ func Id2AbsPath(root string, id int, args ...*URIArgs) (string, error) {
 		return "", err
 	}
 
-	abs_path := filepath.Join(root, rel)
+	var abs_path string
+
+	// because filepath.Join will screw up scheme URIs
+	// (20170124/thisisaaronland)
+
+	_, err = url.Parse(root)
+
+	if err == nil {
+
+		if !strings.HasSuffix(root, "/") {
+			root += "/"
+		}
+
+		abs_path = root + rel
+
+	} else {
+		abs_path = filepath.Join(root, rel)
+	}
+
 	return abs_path, nil
+}
+
+func IsAltFile(path string) (bool, error) {
+
+	re_altfile, err := regexp.Compile(`^\d+\-alt\-.*\.geojson`)
+
+	if err != nil {
+		return false, err
+	}
+
+	abs_path, err := filepath.Abs(path)
+
+	if err != nil {
+		return false, err
+	}
+
+	fname := filepath.Base(abs_path)
+
+	alt := re_altfile.MatchString(fname)
+
+	return alt, nil
 }
