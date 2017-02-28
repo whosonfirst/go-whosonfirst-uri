@@ -50,6 +50,10 @@ Produces:
 /usr/local/data/101/736/545/101736545-alt-mapzen-display-1024.geojson
 ```
 
+## The Long Version
+
+Please read this: https://github.com/whosonfirst/whosonfirst-cookbook/blob/master/how_to/creating_alt_geometries.md
+
 ## Utilities
 
 ### wof-expand
@@ -75,5 +79,5 @@ Usage of ./bin/wof-expand:
 
 ## See also
 
-* https://github.com/whosonfirst/whosonfirst-cookbook/blob/master/how_to/creating_alt_geometries.md
+* * https://github.com/whosonfirst/whosonfirst-cookbook/blob/master/how_to/creating_alt_geometries.md
 * https://github.com/whosonfirst/py-mapzen-whosonfirst-uri
