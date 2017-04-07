@@ -77,42 +77,44 @@ Usage of ./bin/wof-cat:
     	Ensure that the source for an alternate geometry is valid (see also: go-whosonfirst-sources)
 ```
 
-For example, assuming you are in the `whosonfirst-data` repo:
+For example, assuming you are in the `whosonfirst-data` repo, to dump the record for [San Francisco](https://whosonfirst.mapzen.com/spelunker/id/85922583/) (or `data/859/225/83/85922583.geojson`) you would type:
 
 ```
-$> wof-cat 0 | less
-
+$> wof-cat 85922583 | less
 {
-  "id": 0,
+  "id": 85922583,
   "type": "Feature",
   "properties": {
     "edtf:cessation":"uuuu",
     "edtf:inception":"uuuu",
-    "geom:area":64800.0,
-    "geom:bbox":"-180.0,-90.0,180.0,90.0",
-    "geom:latitude":-0.0,
-    "geom:longitude":-0.0,
-    "iso:country":"",
+    "geom:area":0.061408,
+    "geom:area_square_m":600307527.980658,
+    "geom:bbox":"-123.173825,37.63983,-122.28178,37.929824",
+    "geom:latitude":37.759715,
+    "geom:longitude":-122.693976,
+    "gn:elevation":16,
+    "gn:latitude":37.77493,
+    "gn:longitude":-122.41942,
+    "gn:population":805235,
+    "iso:country":"US",
+    "lbl:bbox":"-122.51489,37.70808,-122.35698,37.83239",
+    "lbl:latitude":37.778008,
+    "lbl:longitude":-122.431272,
+    "mps:latitude":37.778008,
+    "mps:longitude":-122.431272,
     "mz:hierarchy_label":1,
     "name:chi_x_preferred":[
-        "\u5730\u7403"
+        "\u65e7\u91d1\u5c71"
     ],
     "name:chi_x_variant":[
-        "\u4e16\u754c"
+        "\u820a\u91d1\u5c71"
     ],
-    "name:dut_x_preferred":[
-        "Aarde"
-    ],
-    "name:dut_x_variant":[
-        "Wereld"
-    ],
-    "name:eng_x_preferred":[
-        "Earth"
-    ],
-    ...
-  },
-  "geometry": {"coordinates":[[[-180.0,-90.0],[-180.0,90.0],[180.0,90.0],[180.0,-90.0],[-180.0,-90.0]]],"type":"Polygon"}
-}
+    "name:eng_x_colloquial":[
+        "City by the Bay",
+        "City of the Golden Gate",
+        "Fog City",
+
+...and so on
 ```
 
 ### wof-expand
