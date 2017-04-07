@@ -119,6 +119,8 @@ $> wof-cat 85922583 | less
 
 ### wof-expand
 
+Expand one or more Who's On First IDs to their absolute paths and print them to `STDOUT`.
+
 ```
 ./bin/wof-expand -h
 Usage of ./bin/wof-expand:
@@ -131,7 +133,7 @@ Usage of ./bin/wof-expand:
   -prefix string
     	Prepend this prefix to all paths
   -root string
-    	A root directory for absolute paths
+    	The directory where Who's On First records are stored. If empty defaults to the current working directory + "/data".
   -source string
     	The source of the alternate geometry
   -strict
@@ -140,5 +142,5 @@ Usage of ./bin/wof-expand:
 
 ## See also
 
-* * https://github.com/whosonfirst/whosonfirst-cookbook/blob/master/how_to/creating_alt_geometries.md
+* https://github.com/whosonfirst/whosonfirst-cookbook/blob/master/how_to/creating_alt_geometries.md
 * https://github.com/whosonfirst/py-mapzen-whosonfirst-uri
