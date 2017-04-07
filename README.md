@@ -52,6 +52,65 @@ Produces:
 
 ## Utilities
 
+### wof-cat
+
+Expand and concatenate Who's On First IDs and print them to `STDOUT`.
+
+```
+./bin/wof-cat -h
+Usage of ./bin/wof-cat:
+  -alternate
+    	Encode URI as an alternate geometry
+  -extras string
+    	A comma-separated list of extra information to include with an alternate geometry (optional)
+  -function string
+    	The function of the alternate geometry (optional)
+  -root string
+    	If empty defaults to the current working directory + "/data".
+  -source string
+    	The source of the alternate geometry
+  -strict
+    	Ensure that the source for an alternate geometry is valid (see also: go-whosonfirst-sources)
+```
+
+For example, assuming you are in the `whosonfirst-data` repo:
+
+```
+$> wof-cat 0 | less
+
+{
+  "id": 0,
+  "type": "Feature",
+  "properties": {
+    "edtf:cessation":"uuuu",
+    "edtf:inception":"uuuu",
+    "geom:area":64800.0,
+    "geom:bbox":"-180.0,-90.0,180.0,90.0",
+    "geom:latitude":-0.0,
+    "geom:longitude":-0.0,
+    "iso:country":"",
+    "mz:hierarchy_label":1,
+    "name:chi_x_preferred":[
+        "\u5730\u7403"
+    ],
+    "name:chi_x_variant":[
+        "\u4e16\u754c"
+    ],
+    "name:dut_x_preferred":[
+        "Aarde"
+    ],
+    "name:dut_x_variant":[
+        "Wereld"
+    ],
+    "name:eng_x_preferred":[
+        "Earth"
+    ],
+    ...
+  },
+  "geometry": {"coordinates":[[[-180.0,-90.0],[-180.0,90.0],[180.0,90.0],[180.0,-90.0],[-180.0,-90.0]]],"type":"Polygon"}
+}
+```
+
 ### wof-expand
 
 ```
