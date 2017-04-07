@@ -58,7 +58,7 @@ Please read this: https://github.com/whosonfirst/whosonfirst-cookbook/blob/maste
 
 ### wof-cat
 
-Expand and concatenate Who's On First IDs and print them to `STDOUT`.
+Expand and concatenate one or more Who's On First IDs and print them to `STDOUT`.
 
 ```
 ./bin/wof-cat -h
