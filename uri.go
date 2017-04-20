@@ -241,3 +241,54 @@ func IdFromPath(path string) (int64, error) {
 
 	return wofid, nil
 }
+
+func RepoFromPath(path string) (string, error) {
+
+	abs_path, err := filepath.Abs(path)
+
+	if err != nil {
+		return "", err
+	}
+
+	wofid, err := IdFromPath(abs_path)
+
+	if err != nil {
+		return "", err
+	}
+
+	rel_path, err := Id2RelPath(int(wofid)) // AAAAAARRRRGGGGGHHHHH
+
+	if err != nil {
+		return "", err
+	}
+
+	root_path := strings.Replace(abs_path, rel_path, "", 1)
+	root_path = strings.TrimRight(root_path, "/")
+
+	repo := ""
+
+	for {
+
+		base := filepath.Base(root_path)
+		root_path = filepath.Dir(root_path)
+
+		if strings.HasPrefix(base, "whosonfirst-data") {
+			repo = base
+			break
+		}
+
+		if root_path == "/" {
+			break
+		}
+
+		if root_path == "" {
+			break
+		}
+	}
+
+	if repo == "" {
+		return "", errors.New("Unable to determine repo from path")
+	}
+
+	return repo, nil
+}
