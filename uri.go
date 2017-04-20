@@ -200,3 +200,44 @@ func IsAltFile(path string) (bool, error) {
 
 	return alt, nil
 }
+
+func IdFromPath(path string) (int64, error) {
+
+	abs_path, err := filepath.Abs(path)
+
+	if err != nil {
+		return -1, err
+	}
+
+	ok, err := IsWOFFile(abs_path)
+
+	if err != nil {
+		return -1, err
+	}
+
+	if !ok {
+		return -1, errors.New("Not a valid WOF file")
+	}
+
+	fname := filepath.Base(abs_path)
+
+	re_wofid, err := regexp.Compile(`^(\d+)(?:\-alt\-.*)?\.geojson`)
+
+	if err != nil {
+		return -1, err
+	}
+
+	match := re_wofid.FindAllStringSubmatch(fname, -1)
+
+	if len(match[0]) != 2 {
+		return -1, errors.New("Unable to parse filename")
+	}
+
+	wofid, err := strconv.ParseInt(match[0][1], 10, 64)
+
+	if err != nil {
+		return -1, err
+	}
+
+	return wofid, nil
+}
