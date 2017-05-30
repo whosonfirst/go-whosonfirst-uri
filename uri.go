@@ -256,7 +256,7 @@ func RepoFromPath(path string) (string, error) {
 		return "", err
 	}
 
-	rel_path, err := Id2RelPath(int(wofid)) // AAAAAARRRRGGGGGHHHHH
+	rel_path, err := Id2RelPath(wofid)
 
 	if err != nil {
 		return "", err
