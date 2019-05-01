@@ -2,7 +2,6 @@ package uri
 
 import (
 	"errors"
-	"fmt"
 	"github.com/whosonfirst/go-whosonfirst-sources"
 	_ "log"
 	"net/url"
@@ -30,8 +29,6 @@ type AltGeom struct {
 func (a *AltGeom) String() string {
 
 	parts := []string{
-		"{ID}",
-		"alt",
 		a.Source,
 	}
 
@@ -43,8 +40,7 @@ func (a *AltGeom) String() string {
 		parts = append(parts, ex)
 	}
 
-	str_parts := strings.Join(parts, "-")
-	return fmt.Sprintf("%s.geojson", str_parts)
+	return strings.Join(parts, "-")
 }
 
 func NewDefaultURIArgs() *URIArgs {
