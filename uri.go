@@ -239,12 +239,6 @@ func AltGeomFromPath(path string) (*AltGeom, error) {
 
 	fname := filepath.Base(abs_path)
 
-	/*
-		if !re_altfile.MatchString(fname){
-			return nil, nil
-		}
-	*/
-
 	m := re_altfile.FindStringSubmatch(fname)
 
 	if len(m) == 0 {
