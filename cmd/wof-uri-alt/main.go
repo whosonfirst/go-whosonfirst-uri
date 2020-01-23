@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/whosonfirst/go-whosonfirst-uri"	
-	"log"	
+	"github.com/whosonfirst/go-whosonfirst-uri"
+	"log"
 )
 
 func main() {
@@ -20,7 +20,7 @@ func main() {
 		}
 
 		fmt.Println(path, ok)
-		
+
 		alt, err := uri.AltGeomFromPath(path)
 
 		if err != nil {
