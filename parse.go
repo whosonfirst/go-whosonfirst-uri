@@ -85,6 +85,12 @@ func IsWOFFile(path string) (bool, error) {
 		return false, nil
 	}
 
+	ext := filepath.Ext(path)
+
+	if ext != ".geojson" {
+		return false, nil
+	}
+
 	return true, nil
 }
 
