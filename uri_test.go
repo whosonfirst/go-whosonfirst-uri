@@ -25,16 +25,16 @@ func TestId2FnameAlt(t *testing.T) {
 	id := int64(1527911959)
 
 	alt_geom := &AltGeom{
-		Source: "swim",
+		Source:   "swim",
 		Function: "path",
-		Extras: []string{},
+		Extras:   []string{},
 	}
-	
+
 	uri_args := &URIArgs{
 		IsAlternate: true,
-		AltGeom: alt_geom,
+		AltGeom:     alt_geom,
 	}
-	
+
 	expected := "1527911959-alt-swim-path.geojson"
 
 	fname, err := Id2Fname(id, uri_args)

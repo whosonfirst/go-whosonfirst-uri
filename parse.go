@@ -9,13 +9,6 @@ import (
 	"strings"
 )
 
-type ParsedURI struct {
-	Id          int64
-	URI         string
-	URIArgs     *URIArgs
-	IsAlternate bool
-}
-
 var re_uri *regexp.Regexp
 
 func init() {
