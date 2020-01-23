@@ -54,26 +54,29 @@ func ParseURI(path string) (int64, *URIArgs, error) {
 	}
 
 	args := &URIArgs{
-		Alternate: false,
+		IsAlternate: false,
 	}
 
 	if str_alt != "" {
 
-		args.Alternate = true
-
 		alt := strings.Split(str_alt, "-")
+
+		alt_geom := &AltGeom{}
 
 		switch len(alt) {
 		case 1:
-			args.Source = alt[0]
+			alt_geom.Source = alt[0]
 		case 2:
-			args.Source = alt[0]
-			args.Function = alt[1]
+			alt_geom.Source = alt[0]
+			alt_geom.Function = alt[1]
 		default:
-			args.Source = alt[0]
-			args.Function = alt[1]
-			args.Extras = alt[2:]
+			alt_geom.Source = alt[0]
+			alt_geom.Function = alt[1]
+			alt_geom.Extras = alt[2:]
 		}
+
+		args.AltGeom = alt_geom
+		args.IsAlternate = true
 	}
 
 	return wofid, args, nil
@@ -100,7 +103,7 @@ func IsAltFile(path string) (bool, error) {
 		return false, err
 	}
 
-	is_alt := uri_args.Alternate
+	is_alt := uri_args.IsAlternate
 	return is_alt, nil
 }
 
@@ -112,17 +115,11 @@ func AltGeomFromPath(path string) (*AltGeom, error) {
 		return nil, err
 	}
 
-	if !uri_args.Alternate {
+	if !uri_args.IsAlternate {
 		return nil, errors.New("Not an alternate geometry")
 	}
 
-	alt := &AltGeom{
-		Source:   uri_args.Source,
-		Function: uri_args.Function,
-		Extras:   uri_args.Extras,
-	}
-
-	return alt, nil
+	return uri_args.AltGeom, nil
 }
 
 func IdFromPath(path string) (int64, error) {
