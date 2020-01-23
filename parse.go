@@ -78,3 +78,106 @@ func ParseURI(path string) (int64, *URIArgs, error) {
 
 	return wofid, args, nil
 }
+
+//
+
+func IsWOFFile(path string) (bool, error) {
+
+	_, _, err := ParseURI(path)
+
+	if err != nil {
+		return false, nil
+	}
+
+	return true, nil
+}
+
+func IsAltFile(path string) (bool, error) {
+
+	_, uri_args, err := ParseURI(path)
+
+	if err != nil {
+		return false, err
+	}
+
+	is_alt := uri_args.Alternate
+	return is_alt, nil
+}
+
+func AltGeomFromPath(path string) (*AltGeom, error) {
+
+	_, uri_args, err := ParseURI(path)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if !uri_args.Alternate {
+		return nil, errors.New("Not an alternate geometry")
+	}
+
+	alt := &AltGeom{
+		Source:   uri_args.Source,
+		Function: uri_args.Function,
+		Extras:   uri_args.Extras,
+	}
+
+	return alt, nil
+}
+
+func IdFromPath(path string) (int64, error) {
+
+	id, _, err := ParseURI(path)
+	return id, err
+}
+
+func RepoFromPath(path string) (string, error) {
+
+	abs_path, err := filepath.Abs(path)
+
+	if err != nil {
+		return "", err
+	}
+
+	wofid, err := IdFromPath(abs_path)
+
+	if err != nil {
+		return "", err
+	}
+
+	rel_path, err := Id2RelPath(wofid)
+
+	if err != nil {
+		return "", err
+	}
+
+	root_path := strings.Replace(abs_path, rel_path, "", 1)
+	root_path = strings.TrimRight(root_path, "/")
+
+	repo := ""
+
+	for {
+
+		base := filepath.Base(root_path)
+		root_path = filepath.Dir(root_path)
+
+		if strings.HasPrefix(base, "whosonfirst-data") {
+			repo = base
+			break
+		}
+
+		if root_path == "/" {
+			break
+		}
+
+		if root_path == "" {
+			break
+		}
+	}
+
+	if repo == "" {
+		return "", errors.New("Unable to determine repo from path")
+	}
+
+	return repo, nil
+}
