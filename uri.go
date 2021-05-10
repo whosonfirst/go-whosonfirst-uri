@@ -10,18 +10,27 @@ import (
 	"strings"
 )
 
+// URIArgs is a struct indicating whether or not a URI is considered an "alternate" geometry and specific details if it is.
 type URIArgs struct {
+	// Boolean value indicating whether or not a URI is considered an "alternate" geometry
 	IsAlternate bool
-	AltGeom     *AltGeom
+	// And *AltGeom struct containing details about an "alternate" geometry
+	AltGeom *AltGeom
 }
 
+// AltGeom is a struct containing details about an "alternate" geometry
 type AltGeom struct {
-	Source   string
+	// The source of the alternate geometry. This value is required and SHOULD match a corresponding entry in the whosonfirst/whosonfirst-sources repository.
+	Source string
+	// The labeled function for the alternate geometry. This value MAY be a controlled value relative to `Source`.
 	Function string
-	Extras   []string
-	Strict   bool
+	// A list of optional strings to append to the alternate geometry's URI.
+	Extras []string
+	// A boolean value used to indicate whether the `Source` value has a corresponding entry in the whosonfirst/whosonfirst-sources repository.
+	Strict bool
 }
 
+// Return the string value for an "alternate" geometry.
 func (a *AltGeom) String() (string, error) {
 
 	source := a.Source
@@ -56,6 +65,7 @@ func (a *AltGeom) String() (string, error) {
 	return alt_str, nil
 }
 
+// Return a URIArgs struct whose IsAlternate flag is false.
 func NewDefaultURIArgs() *URIArgs {
 
 	alt_geom := &AltGeom{}
@@ -86,6 +96,7 @@ func NewAlternateURIArgs(source string, function string, extras ...string) *URIA
 
 // See also: https://github.com/whosonfirst/whosonfirst-cookbook/blob/master/how_to/creating_alt_geometries.md
 
+// Id2Fname parses a Who's On First
 func Id2Fname(id int64, args ...*URIArgs) (string, error) {
 
 	str_id := strconv.FormatInt(id, 10)
