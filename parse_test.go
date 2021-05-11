@@ -38,7 +38,7 @@ func TestParseURIAlt(t *testing.T) {
 	possible := []string{
 		"152/791/195/9/1527911959-alt-swim-path.geojson",
 		"/1527911959-alt-swim-path/",
-		"1527911959-alt-swim-path",		
+		"1527911959-alt-swim-path",
 		"1527911959-alt-swim-path.geojson",
 	}
 
