@@ -10,15 +10,15 @@ import (
 	"strings"
 )
 
-// URIArgs is a struct indicating whether or not a URI is considered an "alternate" geometry and specific details if it is.
+// URIArgs is a struct indicating whether or not a URI is considered an alternate geometry and specific details if it is.
 type URIArgs struct {
-	// Boolean value indicating whether or not a URI is considered an "alternate" geometry
+	// Boolean value indicating whether or not a URI is considered an alternate geometry
 	IsAlternate bool
-	// And *AltGeom struct containing details about an "alternate" geometry
+	// And *AltGeom struct containing details about an alternate geometry
 	AltGeom *AltGeom
 }
 
-// AltGeom is a struct containing details about an "alternate" geometry
+// AltGeom is a struct containing details about an alternate geometry
 type AltGeom struct {
 	// The source of the alternate geometry. This value is required and SHOULD match a corresponding entry in the whosonfirst/whosonfirst-sources repository.
 	Source string
@@ -30,7 +30,7 @@ type AltGeom struct {
 	Strict bool
 }
 
-// Return the string value for an "alternate" geometry.
+// Return the string value for an alternate geometry.
 func (a *AltGeom) String() (string, error) {
 
 	source := a.Source
@@ -65,7 +65,7 @@ func (a *AltGeom) String() (string, error) {
 	return alt_str, nil
 }
 
-// Return a URIArgs struct whose IsAlternate flag is false.
+// Return a `URIArgs` struct whose IsAlternate flag is false.
 func NewDefaultURIArgs() *URIArgs {
 
 	alt_geom := &AltGeom{}
@@ -78,6 +78,7 @@ func NewDefaultURIArgs() *URIArgs {
 	return &u
 }
 
+// Return a `URIArgs` struct representing an alternate geometry using the arguments defined in `source`, `function` and `extras`.
 func NewAlternateURIArgs(source string, function string, extras ...string) *URIArgs {
 
 	alt_geom := &AltGeom{
@@ -96,7 +97,7 @@ func NewAlternateURIArgs(source string, function string, extras ...string) *URIA
 
 // See also: https://github.com/whosonfirst/whosonfirst-cookbook/blob/master/how_to/creating_alt_geometries.md
 
-// Id2Fname parses a Who's On First
+// Id2Fname parses a Who's On First ID and one or more URIArgs instances (in practice just one instance) in to a filename. 
 func Id2Fname(id int64, args ...*URIArgs) (string, error) {
 
 	str_id := strconv.FormatInt(id, 10)
@@ -126,6 +127,7 @@ func Id2Fname(id int64, args ...*URIArgs) (string, error) {
 	return fname, nil
 }
 
+// Id2Path parses a Who's On First ID in to directory tree that would contain that ID.
 func Id2Path(id int64) (string, error) {
 
 	parts := []string{}
@@ -146,6 +148,7 @@ func Id2Path(id int64) (string, error) {
 	return path, nil
 }
 
+// Id2RelPath parses a Who's On First ID and one or more URIArgs instances (in practice just one instance) in to a relative path for that ID. This method joins the output of the `Id2Path` and `Id2Fname` methods.
 func Id2RelPath(id int64, args ...*URIArgs) (string, error) {
 
 	fname, err := Id2Fname(id, args...)
@@ -164,6 +167,7 @@ func Id2RelPath(id int64, args ...*URIArgs) (string, error) {
 	return rel_path, nil
 }
 
+// Id2AbsPath parses a Who's On First ID and one or more URIArgs instances (in practice just one instance) in to a absolute URL for that ID. This method joins the `root` URL and the output of the `Id2RelPath` method.
 func Id2AbsPath(root string, id int64, args ...*URIArgs) (string, error) {
 
 	rel, err := Id2RelPath(id, args...)
