@@ -5,7 +5,7 @@
 //	import (
 //		"github.com/whosonfirst/go-whosonfirst-uri"
 //	)
-//	
+//
 //	fname, _ := uri.Id2Fname(101736545)
 //	rel_path, _ := uri.Id2RelPath(101736545)
 //	abs_path, _ := uri.Id2AbsPath("/usr/local/data", 101736545)
@@ -21,13 +21,13 @@
 //	import (
 //		"github.com/whosonfirst/go-whosonfirst-uri"
 //	)
-//	
+//
 //	source := "mapzen"
 //	function := "display"
 //	extras := []string{ "1024" }
-//	
+//
 //	args := uri.NewAlternateURIArgs(source, function, extras...)
-//	
+//
 //	fname, _ := uri.Id2Fname(101736545, args)
 //	rel_path, _ := uri.Id2RelPath(101736545, args)
 //	abs_path, _ := uri.Id2AbsPath("/usr/local/data", 101736545, args)

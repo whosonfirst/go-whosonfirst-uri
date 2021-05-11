@@ -1,6 +1,8 @@
 package uri
 
 import (
+	"encoding/json"
+	_ "fmt"
 	"testing"
 )
 
@@ -78,4 +80,42 @@ func TestId2RelPath(t *testing.T) {
 	if rel_path != expected {
 		t.Fatalf("Invalid relative path for '%d'. Expected '%s' but got '%s'", id, expected, rel_path)
 	}
+}
+
+func TestURIArgsJSON(t *testing.T) {
+
+	enc_args := `{"is_alternate":true,"alternate_geometry":{"source":"mapzen","function":"display","extras":["1024"],"strict":true}}`
+
+	var uri_args *URIArgs
+
+	err := json.Unmarshal([]byte(enc_args), &uri_args)
+
+	if err != nil {
+		t.Fatalf("Failed to unmarshal args, %v", err)
+	}
+
+	if !uri_args.IsAlternate {
+		t.Fatalf("Expected alternate geometry")
+	}
+
+	alt_geom := uri_args.AltGeom
+
+	if alt_geom.Source != "mapzen" {
+		t.Fatalf("Unexpected alternate geometry source")
+	}
+
+	if alt_geom.Function != "display" {
+		t.Fatalf("Unexpected alternate geometry function")
+	}
+
+	if len(alt_geom.Extras) != 1 {
+		t.Fatalf("Unexpected alternate geometry extras")
+	}
+
+	enc_args2, err := json.Marshal(uri_args)
+
+	if string(enc_args2) != enc_args {
+		t.Fatalf("Unexpected alternate geometry marshaling")
+	}
+
 }
