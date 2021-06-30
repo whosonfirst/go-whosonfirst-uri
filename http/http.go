@@ -62,6 +62,7 @@ func ParseURIHandler(next gohttp.Handler) gohttp.HandlerFunc {
 			return
 		}
 
+		rsp.Header().Set("Content-Type", "text/plain")
 		rsp.Write([]byte(rel_path))
 		return
 	}
