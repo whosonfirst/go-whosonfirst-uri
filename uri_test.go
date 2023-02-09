@@ -119,3 +119,22 @@ func TestURIArgsJSON(t *testing.T) {
 	}
 
 }
+
+func TestNewAlternateURIArgsFromAltLabel(t *testing.T) {
+
+	tests := []string{
+		"sfomuseum-pathto-12345",
+		"test-example",
+		"quattroshapes",
+	}
+
+	for _, label := range tests {
+
+		_, err := NewAlternateURIArgsFromAltLabel(label)
+
+		if err != nil {
+			t.Fatalf("Failed to derive URI args from '%s', %v", label, err)
+		}
+	}
+
+}
